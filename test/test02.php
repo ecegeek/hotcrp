@@ -711,4 +711,13 @@ $Conf->save_setting("opt.docstore", 1, "/foo/bar/%3h/%5h/%h");
 xassert_eqq($doc->docclass->filestore_path($doc), "/foo/bar/sha2-66a/sha2-66a04/sha2-66a045b452102c59d840ec097d59d9467e13a3f34f6494e539ffd32c1bb35f18");
 xassert_eqq(HotCRPDocument::s3_filename($doc), "doc/66a/sha2-66a045b452102c59d840ec097d59d9467e13a3f34f6494e539ffd32c1bb35f18.txt");
 
+// mailer expansion
+$mailer = new HotCRPMailer($Conf, null, null, ["width" => false]);
+xassert_eqq($mailer->expand("%CONFNAME%//%CONFLONGNAME%//%CONFSHORTNAME%"),
+    "Test Conference I (Testconf I)//Test Conference I//Testconf I\n");
+xassert_eqq($mailer->expand("%SITECONTACT%//%ADMINEMAIL%"),
+    "Eddie Kohler <ekohler@hotcrp.lcdf.org>//ekohler@hotcrp.lcdf.org\n");
+xassert_eqq($mailer->expand("%URLENC(ADMINEMAIL)% : %OPT(ADMINEMAIL)% : %OPT(NULL)% : %OPT(EMAIL)%"),
+    "ekohler%40hotcrp.lcdf.org : ekohler@hotcrp.lcdf.org :  : %OPT(EMAIL)%\n");
+
 xassert_exit();
