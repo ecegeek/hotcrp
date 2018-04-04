@@ -258,8 +258,9 @@ class SettingParser {
 
     static private $null_mailer;
     static function expand_mail_template($name, $default) {
+        global $Conf;
         if (!self::$null_mailer)
-            self::$null_mailer = new HotCRPMailer(null, null, array("width" => false));
+            self::$null_mailer = new HotCRPMailer($Conf, null, null, array("width" => false));
         return self::$null_mailer->expand_template($name, $default);
     }
 }

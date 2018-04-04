@@ -1561,7 +1561,7 @@ class Contact {
             $template = "@resetpassword";
         }
 
-        $mailer = new HotCRPMailer($this, null, $rest);
+        $mailer = new HotCRPMailer($this->conf, $this, null, $rest);
         $prep = $mailer->make_preparation($template, $rest);
         if ($prep->sendable
             || !$sensitive
